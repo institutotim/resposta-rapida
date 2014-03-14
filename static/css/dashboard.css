@@ -1,0 +1,35 @@
+ul.dashboard-items {
+    list-style: none;
+    display: inline-block;
+    width: 100%;
+    margin-top: 30px;
+
+}
+
+ul.dashboard-items li {
+    list-style-image: none;
+}
+
+.dashboard-items .item {
+    float: left;
+    width: 215px;
+    height: 90px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.dashboard-items .item i {
+    font-size: 50px;
+    width: 100%;
+    color: #333;
+    margin-bottom: 5px;
+
+}
+
+.dashboard-items .item a {
+    display: block;
+    width: 100%;
+}
+
+.main-title i {
+    margin-right: 10px;
+}

@@ -1,0 +1,99 @@
+{% extends "layout-split-2.html" %}
+{% load forms_tags %}
+
+{% block title %}Message Tester - {{ block.super }}{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}httptester/stylesheets/httptester.css"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        var app = {
+            "send_message_url": "{% url httptester-send-message %}",
+            "get_messages_url": "{% url httptester-get-messages-after %}"
+        };
+    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}httptester/js/app.js"></script>
+{% endblock %}
+
+{% block left %}
+    <div class="widget-box module" ng-controller="FrmCtrl">
+        <div class="widget-title"><h5>Teste de mensagem</h5></div>
+
+        <div class="widget-content">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div>
+                    <div class="control-group required">
+                        <label class="control-label" for="id_identity">Telefone</label>
+
+                        <div class="controls">
+                            <input id="id_identity" type="text" name="identity"
+                                   value="{{ message_form.identity.value }}" maxlength="100">
+                            <span class="help-block">O telefone que o sistema irá pensar que esta mensagem veio.</span>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="id_text">Mensagem</label>
+
+                        <div class="controls">
+                            <textarea id="id_text" rows="4" cols="30"
+                                      name="text">{{ message_form.text.value|default:"" }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit">
+                    <input type="button" id="id_submit" value="Enviar" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="widget-box module">
+        <div class="widget-title">
+        <span class="icon">
+            <i class="icon-th-list"></i>
+        </span>
+            <h5>Registro de mensagens</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table id="log" class="sortable table">
+                <thead>
+                <tr>
+                    <th><a href="">ID</a></th>
+                    <th class="phone"><a href="">Telefone</a></th>
+                    <th class="phone"><a href="">Origem</a></th>
+                    <th class="text"><a href="">Texto</a></th>
+                </tr>
+                </thead>
+                <tbody id="message-list">{% if message_log %}{% for msg in message_log %}
+                {% endfor %}{% else %}{% if router_available %}
+                    <tr class="no-data look-left">
+                        <td colspan="4">
+                            <p>
+                                Você ainda não enviou ou recebeu mensagens de teste.<br/>
+                                Use o formulário ao lado para começar.
+                            </p>
+                        </td>
+                    </tr>{% else %}
+                    <tr class="no-data error">
+                        <td colspan="4">
+                            <p>
+                                Não foi possível se conectar no router do RapidSMS.<br/>
+                                Por favor, verifique que ele está rodando.
+                            </p>
+                        </td>
+                    </tr>{% endif %}{% endif %}
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock %}

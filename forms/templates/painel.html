@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Painel de Controle RapidSMS{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/dashboard.css">
+{% endblock %}
+
+{% block content %}
+    <h3 class="main-title"><i class="icon-home"></i>Painel de controle</h3>
+    <div class="widget-box module">
+        <div class="widget-title"><h5>Acesso rápido</h5></div>
+        <div class="widget-content nopadding">
+            <ul class="dashboard-items">
+                <li class="item">
+                    <a href="{% url list_forms %}">
+                        <i class="icon-list-alt"></i>
+                        Formulários
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="{% url registro %}">
+                        <i class="icon-book"></i>
+                        Registro de mensagens
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="{% url httptester %}">
+                        <i class="icon-exchange"></i>
+                        Teste de mensagens
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="{% url list_configuration %}">
+                        <i class="icon-cog"></i>
+                        Configurações gerais
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="{% url websend %}">
+                        <i class="icon-circle-arrow-right"></i>
+                        Envio direto
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <p><strong>Estatísticas:</strong> {{ num_sent }} SMSs enviados. {{ num_received }} SMSs recebidos.</p>
+{% endblock %}

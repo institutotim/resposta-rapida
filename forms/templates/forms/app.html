@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Visualizar Formulário{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/forms.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/editable.css" media="all">
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $field_update_url = "{% url field_update %}";
+        $new_form = {% if not form.pk %}true{% else %}false{% endif %};
+        $save_form_url = "{% url save_form %}";
+        $add_field_url = "{% url add_field %}";
+        {% if form.pk %}
+        $form_id = {{ form.pk }};
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/editable.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/edit_form.js"></script>
+{% endblock %}

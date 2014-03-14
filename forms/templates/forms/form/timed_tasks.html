@@ -1,0 +1,101 @@
+<div class="widget-box module" id="timed-tasks-panel">
+    <div class="widget-title">
+        <h5>Tarefas temporizadas</h5>
+
+        <div class="right">
+            <a href="#" class="btn btn-small btn-success add-field add-task-button"><i
+                    class="icon-plus"></i></a>
+        </div>
+    </div>
+    <div class="widget-content nopadding">
+        <table class="table list-table table-hover">
+            <thead>
+            <tr>
+                <th width="15%"></th>
+                <th width="20%">Submissões com estado</th>
+                <th width="15%">Serão alteradas para</th>
+                <th>Enviando a mensagem</th>
+                <th width="15%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="no-items">
+                <td colspan="5" style="text-align: center">Nenhuma tarefa temporizada cadastrada.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/x-template" id="task-template">
+    <tr>
+        <td><span class="when"></span></td>
+        <td><span class="status_from"></span></td>
+        <td><span class="status_to"></span></td>
+        <td><span class="answer"></span></td>
+        <td class="button-col">
+            <a href="#" class="btn edit-btn btn-small"><i
+                    class="icon-edit"></i>
+            </a>
+            <a href="#" class="btn del-btn btn-small"
+               data-confirm-ev="Tem certeza que deseja excluir esta tarefa?"><i
+                    class="icon-remove"></i> </a>
+        </td>
+    </tr>
+</script>
+
+<div class="modal hide fade" id="timed-task-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4><i class="icon-plus"></i> <span>Adicionar Tarefa Temporizada</span></h4>
+    </div>
+    <p class="hide alert alert-error error-display" id="task-error"><i class="icon-remove"></i> <span></span></p>
+
+    <div class="modal-body">
+        <input type="hidden" class="pk">
+        <input type="hidden" class="form">
+
+        <p>
+
+            <select class="once" style="width:100px">
+                <option value="1">Após ...</option>
+                <option value="0">A cada ...</option>
+            </select>
+
+            <input type="number" name="time" class="run_after_min" size="5" style="width:80px;margin-left:10px;margin-right:10px;"> <span> minutos.</span>
+        </p>
+
+        <div>
+            <div class="p-right">
+                <p>Submissões com o status:</p>
+                <select class="status_from">
+                    {% for status in status_types %}
+                        <option value="{{ status.0 }}">{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="p-left" style="margin-left:40px;">
+                <p>Serão alteradas para:</p>
+                <select class="status_to">
+                    <option value="-1">Manter atual</option>
+                    {% for status in status_types %}
+                        <option value="{{ status.0 }}">{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+        <p>Enviando a mensagem:</p>
+        <textarea class="answer" style="width:97%" rows="2"></textarea>
+
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn cancel" data-dismiss="modal">Cancelar</a>
+        <a href="#" class="btn btn-primary" id="submit-task">Adicionar</a>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block title %}Editar Formulário{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/forms.css">
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/list.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/editable.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/timed_tasks.css" media="all">
+    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/jquery-ui/css/no-theme/jquery-ui-1.10.2.custom.min.css"/>
+{% endblock %}
+
+{% block content %}
+    <p class="alert alert-error hide" id="form-error"><i class="icon-remove"></i> <strong>Erro:</strong> <span></span>
+    </p>
+
+    {% include "forms/form/form_panel.html" %}
+
+    {% if form.pk %}
+        <div class="widget-box module" id="conditions-panel">
+            <div class="widget-title">
+                <h5>Condições do formulário</h5>
+            </div>
+            <div class="widget-content">
+                <div class="p-left">
+                    <p><a href="{% url list_conditions "form" form.id %}"><i class="icon-sitemap"></i> Alterar condições
+                        do
+                        formulário</a><br>
+
+            <span class="small">Condições que são aplicadas ao texto completo do formulário, sem diferenciar
+                campos.</span></p>
+                </div>
+                <div class="p-right" id="confirmation-link">
+                    <p><a href="{% url list_conditions "confirmation" form.id %}"><i class="icon-sitemap"></i> Alterar
+                        condições da confirmação</a><br>
+
+                        <span class="small">Condições aplicadas a mensagem de confirmação enviada pelo usuário.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        {% include "forms/form/field_panel.html" %}
+        {% include "forms/form/timed_tasks.html" %}
+    {% else %}
+        <div class="form-actions">
+            <div class="pull-right">
+                <a href="#" class="btn btn-primary" id="submit-button">Continuar</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        /* globals */
+        $field_update_url = "{% url form_field_update %}";
+        $new_form = {% if not form.pk %}true{% else %}false{% endif %};
+        $save_form_url = "{% url save_form %}";
+        $add_field_url = "{% url add_field %}";
+        $update_field_url = "{% url update_field %}";
+        $remove_field_url = "{% url remove_field %}";
+        $edit_field_condition = "{% url list_conditions "field" 0 %}";
+        $edit_field_condition = $edit_field_condition.substr(0, $edit_field_condition.length - 1);
+        $save_task_url = "{% url save_task %}";
+        $delete_task_url = "{% url delete_task 0 %}";
+        {% if form.pk %}
+            $form_id = {{ form.pk }};
+        {% endif %}
+        $status_lookup = {{ status_lookup|safe }};
+        {% if tasks %}
+            $tasks = {{ tasks|safe }};
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/jquery-ui/js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/editable.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/confirm.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/stage.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/error.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/field_modal.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/fields.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/timedtasks.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/util.js"></script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "web/layout.html" %}
+
+{% block title %}Sistema de coleta de dados - Pastoral da Criança{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}web/css/web.css"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(function () {
+            $("#send_button").on('click', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                if (!$this.hasClass('disabled')) {
+                    $(".btn-primary").html("Enviando...").addClass("disabled");
+                    $(".form").submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{ form.name }}</h1>
+    </div>
+    <div class="messages module">
+        <h3>Preencha os campos a baixo seguindo as informações presentes no cartão do líder:</h3>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                        <i class="icon-exclamation-sign"></i> {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" action="{% url web_submit_form form.pk %}" class="form">
+            {% csrf_token %}
+            {% for field in fields %}
+                <div class="field">
+                    <label for="id_{{ field.name }}">{{ field.desc|default:field.name }}</label>
+                    <input type="text" name="{{ field.name }}" id="id_{{ field.name }}">
+                </div>
+            {% endfor %}
+            <div class="clearfix"></div>
+        </form>
+
+
+    </div>
+
+    <div class="navigation">
+        <a href="{% url web %}" class="btn" id="back_button">&larr; Voltar</a>
+        <a href="{% url web %}" class="btn btn-primary pull-right" id="send_button"> Enviar formulário &rarr;</a>
+    </div>
+{% endblock %}
+

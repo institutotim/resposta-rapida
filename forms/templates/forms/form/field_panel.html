@@ -1,0 +1,61 @@
+<div class="widget-box module" id="fields-panel">
+    <div class="widget-title">
+        <h5>Campos</h5>
+
+        <div class="right">
+            <a href="#" class="btn btn-small btn-success add-field add-field-button"><i
+                    class="icon-plus"></i></a>
+        </div>
+    </div>
+    <div class="widget-content">
+        <p class="center-table no-items">
+            Nenhum campo criado até o momento.
+            <a href="#" class="add-field add-field-button" data-toggle="modal">Adicionar novo.</a>
+        </p>
+        <ul id="fields">
+            {% for field in form.fields.all %}
+                <li><a href="#" class="field" data-id="{{ field.id }}" data-name-internal="{{ field.name }}" data-name-public="{{ field.desc }}" data-type="{{ field.field_type }}">{{ field.name }}</a>
+                    <a href="{% url list_conditions "field" field.id %}"><i class="icon-sitemap"></i> </a>
+                </li>
+                {% if not forloop.last %}
+                    <li class="separator"><span>{{ form.separator }}</span></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="modal hide fade" id="field-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4><i class="icon-plus"></i> <span>Adicionar campo</span></h4>
+    </div>
+    <p class="hide alert alert-error error-display" id="field-error"><i class="icon-remove"></i> <span></span></p>
+
+    <div class="modal-body">
+        <label for="field-name-public">Nome público (descritivo):
+            <input type="text" id="field-name-public" placeholder="Nome do campo">
+        </label>
+
+        <label for="field-type">Tipo:
+            <select id="field-type">
+                <option value="1">Inteiro</option>
+                <option value="2">Texto</option>
+                <option value="3">Usuário</option>
+            </select>
+        </label>
+
+        <label for="field-name-internal">Nome interno (slug):
+            <input type="text" id="field-name-internal" placeholder="nome_do_campo">
+        </label>
+
+        <div class="clearfix"></div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-danger" id="delete-field" data-confirm-ev="Tem certeza que deseja excluir este campo?">Excluir campo</a>
+        <a href="#" class="btn cancel" data-dismiss="modal">Cancelar</a>
+        <a href="#" class="btn btn-primary" id="submit-field">Adicionar</a>
+    </div>
+</div>

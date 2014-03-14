@@ -1,0 +1,66 @@
+{% load tabs_tags %}
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>{% block title %}RapidSMS{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}v2/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}v2/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}v2/css/custom.css">
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}v2/css/layout.css">
+    {% endblock %}
+</head>
+<body>
+<div class="container" id="container">
+    <div class="row" id="top">
+        <div class="span2">
+            <h1 id="logo"><a href="{% url rapidsms-dashboard %}">RapidSMS</a></h1>
+        </div>
+        <div class="span9 offset1" id="top-nav">
+            <div class="navbar">
+                <div class="navbar-inner pull-right">
+                    <div class="container">
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                                {% get_tabs as tabs %}
+
+                                {% for tab in tabs %}
+                                    <li class="app-{{ tab.caption_slug }}{% if tab.is_active %} active{% endif %}">
+                                        <a href="{{ tab.url }}"><span>{{ tab.caption }}</span></a>
+                                    </li>
+                                {% endfor %}
+
+                                {% block auth %}
+                                    {% if user.is_authenticated %}
+                                        <li><a href="{% url rapidsms-logout %}"><i class="icon-off"></i> Sair</a></li>
+                                    {% else %}
+                                        <li><a href="{% url rapidsms-login %}"><i class="icon-lock"></i> Entrar</a></li>
+                                    {% endif %}
+                                {% endblock %}
+                            </ul>
+                        </div>
+                        <!-- /.nav-collapse -->
+                    </div>
+                </div>
+                <!-- /navbar-inner -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="content">
+        <div id="inner">
+            {% if heading and heading_icon %}
+                <h3 class="main-title"><i class="icon-{{ heading_icon }}"></i> {{ heading }}</h3>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{ STATIC_URL }}v2/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}v2/bootstrap/js/bootstrap.min.js"></script>
+{% block scripts %}{% endblock %}
+{% block footer %}{% endblock %}
+</body>
+</html>

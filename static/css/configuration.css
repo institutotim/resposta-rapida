@@ -1,0 +1,15 @@
+.radio.inline {
+    padding-top: 0px !important;
+    padding-bottom: 5px;
+    margin-bottom: 5px !important;
+}
+
+label {
+    margin-bottom: 10px !important;
+}
+
+.messages { padding: 0; margin: 0; }
+.messages li {
+    list-style: none;
+    margin-top: 20px;
+}

@@ -1,0 +1,52 @@
+.nopadding {
+  padding: 0 !important; }
+
+body {
+  height: 100%;
+  background: #006a83 url("../img/bg.jpg") repeat-x left top;
+  margin-top: 15px; }
+
+.messages {
+  padding: 0;
+  margin: 0; }
+
+.messages li {
+  list-style: none;
+  margin: 0; }
+
+#top {
+  margin-top: 20px; }
+  #top #logo {
+    text-indent: -9999px;
+    width: 245px;
+    height: 56px;
+    padding: 0;
+    margin: 0;
+    background: url("../../rapidsms/images/rapidsms-logo.png") no-repeat; }
+  #top #top-nav {
+    margin-top: 9px; }
+
+#content {
+  margin-top: 20px;
+  border-bottom: 1px solid #fff;
+  background-color: white;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #f2f2f2));
+  background-image: -webkit-linear-gradient(white, #f2f2f2);
+  background-image: linear-gradient(white, #f2f2f2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+  padding: 5px 0 0px 0;
+  border-radius: 3px;
+  margin-bottom: 80px; }
+  #content #inner {
+    margin: 15px; }
+  #content .two-columns .col-1, #content .two-columns .col-2 {
+    float: left; }
+  #content .two-columns .col-2 {
+    margin-left: 1%; }
+  #content .module {
+    width: 100%; }
+    #content .module h2 {
+      font-size: 1.8em;
+      color: #555; }
+  #content .I-message, #content .even {
+    background-color: #f5eff1; }

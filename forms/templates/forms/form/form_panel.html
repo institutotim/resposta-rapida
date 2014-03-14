@@ -1,0 +1,101 @@
+<div class="form-panel">
+    <h4 class="editable header-edit" data-type="text" id="name" data-pk="{{ form.pk }}">{{ form.name }}</h4>
+    <hr>
+    <div class="top-info">
+        <div class="item">
+            <strong><i class="icon-key"></i> Palavra-chave:</strong>
+                <span class="word editable" id="keyword" data-type="text" data-maxlength="9" data-pk="{{ form.pk }}">
+                    {{ form.keyword }}
+                </span>
+        </div>
+        <div class="item">
+            <strong><i class="icon-resize-horizontal"></i> Separador:</strong> <span
+                class="word editable" id="separator" data-maxlength="1" data-type="text"
+                data-pk="{{ form.pk }}">{{ form.separator }}</span>
+        </div>
+        <div class="item">
+            <strong><i class="icon-star" style="color:#ffd500"></i> Principal:</strong>
+                <span class="editable bool" id="main" data-type="bool" data-pk="{{ form.pk }}">
+                    {% if form.main %}Sim{% else %}Não{% endif %}
+                </span>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <p class="lonely-p"><strong><i class="icon-info-sign"></i> Resposta padrão:</strong><br>
+            <span class="word own-line editable" id="ans_default" data-type="text"
+                  data-pk="{{ form.pk }}">{{ form.ans_default }}</span></p>
+
+    <p class="lonely-p"><strong><i class="icon-exclamation-sign"></i> Resposta - número incorreto de campos
+        enviados:</strong><br>
+            <span class="word own-line editable" id="ans_incorrect_num_fields" data-type="text"
+                  data-pk="{{ form.pk }}">{{ form.ans_incorrect_num_fields }}</span></p>
+
+    {% if form.pk %}
+    <p class="lonely-p"><strong><i class="icon-lock"></i> Habilitar nos seguintes clientes: </strong><br>
+
+    <div class="top-info">
+        <div class="item item-small">
+            <strong><i class="icon-comment"></i> Cliente SMS:</strong>
+                    <span class="editable bool" id="enable_sms" data-type="bool" data-pk="{{ form.pk }}">
+                        {% if form.enable_sms %}Sim{% else %}Não{% endif %}
+                    </span>
+        </div>
+        <div class="item item-small">
+            <strong><i class="icon-globe"></i> Cliente Web:</strong>
+                    <span class="editable bool" id="enable_web" data-type="bool" data-pk="{{ form.pk }}">
+                        {% if form.enable_web %}Sim{% else %}Não{% endif %}
+                    </span>
+        </div>
+        <div class="item item-small">
+            <strong><i class="icon-cloud-download"></i> Cliente WAP:</strong>
+                    <span class="editable bool" id="enable_wap" data-type="bool" data-pk="{{ form.pk }}">
+                        {% if form.enable_wap %}Sim{% else %}Não{% endif %}
+                    </span>
+        </div>
+        <div class="item item-small">
+            <strong><i class="icon-coffee"></i> Cliente Java:</strong>
+                    <span class="editable bool" id="enable_java" data-type="bool" data-pk="{{ form.pk }}">
+                        {% if form.enable_java %}Sim{% else %}Não{% endif %}
+                    </span>
+        </div>
+    </div>
+    </p>
+    {% endif %}
+    <div class="clearfix"></div>
+
+    <p class="req_heading{% if form.requires_confirmation %} open {% endif %}"><strong><i
+            class="icon-question-sign"></i> Requer confirmação:</strong>
+                <span class="editable bool" id="requires_confirmation" data-type="bool" data-pk="{{ form.pk }}">
+                    {% if form.requires_confirmation %}Sim{% else %}Não{% endif %}
+                </span></p>
+
+    <div class="confirmation-panel req_con{% if not form.requires_confirmation %} hidden{% endif %}">
+        <div class="second-line">
+            <p><strong><i class="icon-ok"></i> Códigos de confirmação positivo:</strong> <span
+                    class="word editable" id="positive_confirmation_list"
+                    data-type="text" data-pk="{{ form.pk }}">{{ form.positive_confirmation_list }}</span></p>
+
+            <p><strong><i class="icon-remove"></i> Códigos de confirmação negativa:</strong> <span
+                    class="word editable" id="negative_confirmation_list"
+                    data-type="text" data-pk="{{ form.pk }}">{{ form.negative_confirmation_list }}</span></p>
+        </div>
+        <div class="clearfix"></div>
+        <p><strong><i class="icon-info-sign"></i> Resposta - pedido de confirmação:</strong><br>
+                <span class="word own-line editable" data-type="text" data-pk="{{ form.pk }}"
+                      id="ans_waiting_confirmation">{{ form.ans_waiting_confirmation }}</span></p>
+
+        <p><strong><i class="icon-minus-sign"></i> Resposta - código de confirmação incorreto:</strong><br>
+                <span class="word own-line editable" data-type="text" data-pk="{{ form.pk }}"
+                      id="ans_unknown_confirmation">{{ form.ans_unknown_confirmation }}</span></p>
+
+        <p><strong><i class="icon-ok-sign"></i> Resposta - usuário confirmou a
+            submissão:</strong><br>
+                <span class="word own-line editable" data-type="text" data-pk="{{ form.pk }}"
+                      id="ans_positive_confirmation">{{ form.ans_positive_confirmation }}</span></p>
+
+        <p><strong><i class="icon-remove-sign"></i> Resposta - usuário cancelou a
+            submissão:</strong><br>
+                <span class="word own-line editable" data-type="text" data-pk="{{ form.pk }}"
+                      id="ans_negative_confirmation">{{ form.ans_negative_confirmation }}</span></p>
+    </div>
+</div>

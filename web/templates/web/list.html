@@ -1,0 +1,26 @@
+{% extends "web/layout.html" %}
+
+{% block title %}Sistema de coleta de dados - Pastoral da Criança{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}web/css/web.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Coleta de Dados - Pastoral da Criança</h1>
+    </div>
+    <div class="messages module">
+        {% if forms %}
+            <h3>Clique no formulário que deseja preencher:</h3>
+            <ul id="forms-list">
+                {% for form in forms %}
+                    <li><i class="icon-file"></i> <a href="{% url web_answer_form form.pk %}">{{ form.name }}</a> &rarr;</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="margin-top: 5px;">Desculpe, não existe nenhum formulário cadastrado até o momento.</p>
+        {% endif %}
+    </div>
+{% endblock %}

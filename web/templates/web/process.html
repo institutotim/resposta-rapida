@@ -1,0 +1,57 @@
+{% extends "web/layout.html" %}
+
+{% block title %}Sistema de coleta de dados - Pastoral da Criança{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}web/css/web.css"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(function () {
+            $("#cancel_submission").on('click', function (e) {
+                if (confirm("Você tem certeza que deseja cancelar o envio?")) {
+                    return true;
+                } else {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{ form.name }}</h1>
+    </div>
+    <div class="messages module">
+        <p id="answer">
+            {% if submission.status == 0 or submission.status == 2 %}
+                <i class="icon-ok-sign"></i>
+            {% elif submission.status == 1 %}
+
+            {% else %}
+                <i class="icon-warning-sign"></i>
+            {% endif %}
+            {{ answer }}</p>
+    </div>
+
+    <div class="navigation">
+        {% if submission.status == 1 %}
+            <a href="{% url web_confirm_submission submission.pk "cancelar" %}" class="btn btn-warning"
+               id="cancel_submission"><i class="icon-stop"></i> Cancelar
+                envio</a>
+            <a href="{% url web_confirm_submission submission.pk "confirmar" %}" class="btn btn-success pull-right" id="send_button"><i class="icon-ok"></i> Confirmar dados</a>
+        {% elif submission.status == 0 or submission.status == 2 %}
+            <a href="{% url web %}" class="btn pull-right" id="back_button">Retornar ao início &rarr;</a>
+        {% else %}
+            <a href="{% url web %}" class="btn" id="back_button">&larr; Retornar ao início</a>
+            <a href="{% url web_answer_form form.pk %}" class="btn btn-primary pull-right">Preencher
+                novamente &rarr;</a>
+        {% endif %}
+    </div>
+{% endblock %}
+

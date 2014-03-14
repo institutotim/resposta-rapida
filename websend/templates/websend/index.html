@@ -1,0 +1,109 @@
+{% extends "layout-split-2.html" %}
+{% load forms_tags %}
+{% load django_tables2 %}
+
+{% block title %}Envio direto - {{ block.super }}{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}websend/stylesheets/websend.css"/>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(function () {
+            $("#id_submit").on('click', function (e) {
+                e.preventDefault();
+                $(this).attr('value', 'Enviando...').addClass('disabled').attr('disabled', 'disabled');
+                $("#send_message_form").submit();
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block left %}
+    <div class="widget-box module" ng-controller="FrmCtrl">
+        <div class="widget-title"><h5>Envio direto</h5></div>
+
+        <div class="widget-content">
+            <form action="{% url websend_enviar %}" method="post" enctype="multipart/form-data" id="send_message_form">
+                {% csrf_token %}
+                <div>
+                    <div class="control-group required">
+                        <label class="control-label" for="carrier">Operadora</label>
+
+                        <div class="controls">
+                            <select name="carrier" id="carrier">
+                                <option value="130">TIM</option>
+                                <option value="123">Oi</option>
+                                <option value="250">Vivo</option>
+                                <option value="200">Claro</option>
+                                <option value="300">BRT</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group required">
+                        <label class="control-label" for="id_text">Mensagem</label>
+
+                        <div class="controls">
+                            <textarea id="id_text" rows="4" cols="30" maxlength="160"
+                                      name="text"></textarea>
+                            <span class="help-block">Até 160 caracteres.</span>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group required">
+                        <label class="control-label" for="id_identities">Telefones</label>
+
+                        <div class="controls">
+                            <input id="id_identities" type="text" name="identities"
+                                   value="" maxlength="100">
+                            <span class="help-block">Se mais de um use vírgula para separar. </span>
+                            <span class="help-block">Formato: DD+TELEFONE</span>
+
+                            <div class="help-block">Exemplo:
+                                <ul>
+                                    <li>11991588080</li>
+                                    <li>4781323245, 2130232239</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="submit">
+                    <input type="button" id="id_submit" value="Enviar mensagem" class="btn btn-success pull-right"
+                           style="margin-top: 10px">
+                </div>
+
+                <div class="clearfix"></div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="widget-box module">
+        <div class="widget-title">
+        <span class="icon">
+            <i class="icon-th-list"></i>
+        </span>
+            <h5>Mensagens enviadas</h5>
+        </div>
+        <div class="widget-content nopadding" id="sent_messages">
+            {% if len > 0 %}
+                {% render_table message_table %}
+            {% else %}
+                <p class="no-data">Nenhuma mensagem enviada até o momento. Utilize o formulário ao lado para
+                    começar.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

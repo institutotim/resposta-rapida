@@ -1,0 +1,90 @@
+#top-nav, #logo {
+    display: none;
+}
+
+#container {
+    width: 650px;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+    color: #666;
+}
+
+h3 {
+    font-size: 20px;
+    color: #888;
+    line-height: 25px;
+}
+
+.page-header {
+    margin: 0;
+}
+
+#forms-list {
+    margin: 0;
+    padding: 0;
+}
+
+#forms-list li {
+    padding: 0;
+    list-style: none;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 8px;
+}
+
+#forms-list {
+    text-align: center;
+}
+
+#content {
+    padding-bottom: 5px;
+}
+
+#forms-list li a {
+    color: #333;
+    font-weight: bold;
+}
+
+#forms-list li:hover, #forms-list li a:hover {
+    color: #2c5e8d;
+    border: none;
+}
+
+.navigation {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid #ddd;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.navigation .btn:first-child {
+    margin-left: 15px;
+}
+
+.navigation .pull-right {
+    margin-right: 15px;
+}
+
+.messages {
+    margin: 0;
+    padding: 0;
+}
+
+.messages li {
+    list-style: none;
+    margin: 15px 0;
+}
+
+.form {
+    text-align: center;
+}
+
+#answer {
+    margin: 15px 15px;
+    font-size: 140%;
+}

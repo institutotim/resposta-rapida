@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Configurações{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/configuration.css">
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box module">
+        <div class="widget-title"><h5>Configurações gerais</h5></div>
+        <div class="widget-content">
+            <form method="post" action="{% url save_configuration %}">
+                {% for section, params in items.iteritems %}
+                    <fieldset>
+
+                        <legend>{{ section }}</legend>
+
+                        {% for key, item in params.iteritems %}
+                            <label>{{ item.label }}</label>
+                            {% if item.value_type == 1 %}
+                                <label class="radio inline"><input type="radio" name="{{ item.key }}" value="1"
+                                        {% if item.value != "0" %} checked="checked"{% endif %}> Sim</label>
+                                <label class="radio inline"><input type="radio" name="{{ item.key }}" value="0"
+                                        {% if item.value == "0" %} checked="checked"{% endif %}> Não</label>
+                            {% elif item.value_type == 2 %}
+                                <input type="text" name="{{ item.key }}" value="{{ item.value }}" class="input-xxlarge">
+                            {% elif item.value_type == 3 %}
+                                <input type="number" name="{{ item.key }}" value="{{ item.value }}">
+                            {% endif %}
+                        {% endfor %}
+                    </fieldset>
+
+                {% endfor %}
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar configurações</button>
+                    <a href="{% url rapidsms-dashboard %}" class="btn">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

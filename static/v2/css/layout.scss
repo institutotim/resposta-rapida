@@ -1,0 +1,71 @@
+@import "../bourbon/bourbon";
+
+.nopadding {
+  padding: 0 !important;
+}
+
+body {
+  height: 100%;
+  background: #006A83 url("../img/bg.jpg") repeat-x left top;
+  margin-top: 15px;
+}
+
+.messages { padding: 0; margin: 0; }
+.messages li {
+    list-style: none;
+    margin: 0;
+}
+
+#top {
+  margin-top: 20px;
+
+  #logo {
+    text-indent: -9999px;
+    width: 245px;
+    height: 56px;
+    padding: 0;
+    margin: 0;
+    background: url("../../rapidsms/images/rapidsms-logo.png") no-repeat;
+  }
+
+  #top-nav {
+    margin-top: 9px;
+  }
+}
+
+#content {
+  margin-top: 20px;
+  border-bottom: 1px solid #fff;
+  @include linear-gradient(#fff, #f2f2f2);
+  @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.65));
+  padding: 5px 0 0px 0;
+  border-radius: 3px;
+  margin-bottom: 80px;
+
+  #inner {
+    margin: 15px;
+  }
+
+  .two-columns {
+    .col-1, .col-2 {
+      float: left;
+    }
+
+    .col-2 {
+      margin-left: 1%;
+    }
+  }
+
+  .module {
+    width: 100%;
+
+    h2 {
+      font-size: 1.8em;
+      color: #555;
+    }
+  }
+
+  .I-message, .even {
+    background-color: #f5eff1;
+  }
+}

@@ -1,0 +1,48 @@
+{% load forms_tags %}
+<!doctype html>
+<html lang="pt-br">
+	<head>
+		<title>RapidSMS - Entrar</title>
+		<link rel="stylesheet" href="{{ STATIC_URL }}v2/bootstrap/css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}v2/css/login.css" type="text/css">
+	</head>
+	<body>
+		<h1>RapidSMS</h1>
+		<div id="mainPanel">
+			<div class="well">
+				<h2>Entrar no sistema</h2>
+				<form method="post" action="{% url rapidsms-login %}">
+					<fieldset>
+						<legend>Insira seus dados para continuar</legend>
+						
+						{% if form.errors %}
+						<div class="alert alert-error">
+							<a class="close" data-dismiss="alert">&times;</a>
+							<strong>Atenção:</strong> nome de usuário ou senha incorretos.
+						</div>
+						{% endif %}
+						
+						<label for="login">Nome de usuário</label>
+						<div class="input-prepend">
+						  <span class="add-on"><i class="icon-user"></i></span>
+						  {{ form.username }}
+						</div>
+						<label for="password">Senha</label>
+						<div class="input-prepend">
+						  <span class="add-on"><i class="icon-lock"></i></span>
+						  {{ form.password }}
+						</div>
+						<div class="form-actions ">
+							<button type="submit" class="btn btn-primary">Efetuar login</button>
+						</div>
+					</fieldset>
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ next }}" />
+				</form>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="{{ STATIC_URL }}v2/js/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}v2/bootstrap/js/bootstrap.min.js"></script>
+</html>

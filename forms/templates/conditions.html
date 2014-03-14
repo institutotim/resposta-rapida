@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %}Lista de Condições{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/list.css">
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/condition.css">
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box module list">
+        <div class="widget-title">
+            <h5>Lista de condições
+                {% if cond_type == "form" %}do formulário:
+                    <a href="{% url view_form form.id %}">{{ form.name }}</a>
+
+                {% endif %}</h5>
+
+            <div class="right">
+                <a href="{% url new_condition cond_type id %}" class="btn btn-small btn-success"><i class="icon-plus"></i></a>
+            </div>
+        </div>
+        <div class="widget-content">
+            {% if conditions %}
+                <table class="table list-table table-hover">
+                    <thead>
+                    <tr>
+                        <th width="20%">Condição</th>
+                        <th width="20%">Parametros</th>
+                        <th width="14%">Mudar estado para</th>
+                        <th>Mensagem</th>
+                        <th width="20%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for condition in conditions %}
+                        <tr>
+                            <td><span>{{ condition.readable_logic }}</span></td>
+                            <td><span>{{ condition.readable_param }}</span></td>
+                            <td><span>{{ condition.readable_action }}</span></td>
+                            <td><span>{{ condition.answer|slice:"35" }}...</span></td>
+                            <td class="button-col">
+                                <a href="{% url edit_condition condition.id %}" class="btn btn-small"><i
+                                        class="icon-edit"></i>
+                                    Editar</a>
+                                <a href="{% url delete_condition condition.id cond_type id %}" class="btn del-btn btn-small"
+                                   data-confirm="Tem certeza que deseja excluir esta condição?"><i
+                                        class="icon-remove"></i> Excluir</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="center-table">Nenhuma condição cadastrada até o momento. Você pode <a
+                        href="{% url new_condition cond_type id %}">cadastrar uma nova</a> se desejar.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/confirm.js"></script>
+{% endblock %}

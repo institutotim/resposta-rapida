@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% load django_tables2 %}
+
+{% block title %}Registro de mensagens{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}messagelog/stylesheets/messagelog.css" />
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Registro de mensagens</h1>
+        {% if search_identity %}
+            <p>Exibindo resultado para o número <strong>"{{ search_identity }}"</strong>. <a href="{% url registro %}">Voltar a exibição geral.</a> </p>
+        {% else %}
+        <form method="get" action="{% url registro_search %}" class="form-search">
+            <p>
+                <label for="search_identity">Filtrar pelo número: </label>
+                <input type="text" id="search_identity" name="search_identity" class="search-query">
+                <input type="submit" value="Pesquisar" class="btn">
+            </p>
+        </form>
+        {% endif %}
+
+    </div>
+    <div class="messages module">
+        {% render_table messages_table %}
+    </div>
+{% endblock %}

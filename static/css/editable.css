@@ -1,0 +1,13 @@
+.x-editable {
+    font-size: 11px !important;
+    padding: 0 2px !important;
+    margin-bottom: 0 !important;
+    text-align: center;
+    cursor: auto;
+}
+
+.own-line.x-editable {
+    font-size: 14px !important;
+    padding: 3px 0 3px 3px !important;
+    text-align: left !important;
+}

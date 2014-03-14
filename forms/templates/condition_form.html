@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+{% block title %}Nova condição{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/edit_condition.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/common.css" media="all">
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box module">
+        <div class="widget-title">
+            {% if condition.id %}
+                <h5>
+                    Editar condição (
+                    {% if related.0 == "form" %}
+                        Do formulário
+                        <a href="{% url list_conditions related.0 related.1.pk %}">{{ related.1.name }}</a>
+                    {% elif related.0 == "confirmation" %}
+                        Confirmação do formulário
+                        <a href="{% url list_conditions related.0 related.1.pk %}">{{ related.1.name }}</a>
+                    {% elif related.0 == "field" %}
+                        Campo <a href="{% url list_conditions related.0 related.1.pk %}">{{ related.1.name }}</a> do
+                        formulário
+                        <a href="{% url view_form related.1.form.pk %}">{{ related.1.form.name }}</a>
+                    {% endif %}
+                    )
+                </h5>
+            {% else %}
+                <h5>Nova condição</h5>
+            {% endif %}
+        </div>
+        <div class="widget-content">
+            <p class="alert alert-error hide" id="condition_form_error"><i class="icon-remove"></i>
+                <strong>Erro:</strong> <span></span></p>
+
+            <form method="post" action="{% url save_condition %}">
+                <div class="cell p30">
+                    <p>Se:</p>
+                    <select name="logic" id="logic" style="width: 340px;">
+                        {% for logic in condition_model.LOGIC_TYPES %}
+                            <option value="{{ logic.0 }}"{% if condition.id and condition.logic == logic.0 %}
+                                    selected="selected"{% endif %}>
+                                {{ logic.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="cell params">
+
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="cell p30">
+                    <p><label><input type="checkbox" enable-for="change-status-to" id="enable-status"> Altere o status
+                        da submissão
+                        para:</label></p>
+                    <select name="status" id="change-status-to">
+                        {% for status in submission_model.STATUS_TYPES %}
+                            <option value="{{ status.0 }}"{% if condition.id and condition.action == status %}
+                                    selected="selected"{% endif %}>
+                                {{ status.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="cell">
+                    <p><label><input type="checkbox" enable-for="change-value-to" id="enable-new-val"> Mudando o valor
+                        inicial enviado pelo
+                        usuário para:</label></p>
+                    <input type="text" name="new_value" id="change-value-to">
+                </div>
+
+                <div class="clearfix"></div>
+
+                <p><label><input type="checkbox" enable-for="answer" id="enable-answer"> Enviando a resposta:</label>
+                </p>
+                <textarea name="new_value" id="answer" class="input-xxxlarge"></textarea>
+
+                <p style="margin-top:15px;">Adicionando as seguintes variáveis no contexto:</p>
+
+                <div class="extra-vars-holder">
+                    <ul id="extra-vars">
+
+                    </ul>
+                </div>
+
+                <div class="form-actions">
+                    <div class="pull-right">
+                        <a class="btn" href="{% url list_conditions related.0 related.1.pk %}">Voltar</a>
+                        <input type="submit" id="save-btn" class="btn btn-primary" value="Salvar">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script id="tmpl-extra-vars-field" type="text/x-js-tmpl">
+        <li>
+            <input type="text" name="var_name" class="var-name disabled" disabled="disabled" placeholder="Nome">
+            <input type="text" name="var_value" class="var-value disabled" disabled="disabled" placeholder="Valor">
+            <button class="var-edit-button btn btn-success classy"><i class="icon-edit"></i></button>
+            <button class="var-delete-button btn btn-danger classy"
+                    data-confirm-ev="Tem certeza que deseja excluir esta variável?"><i class="icon-remove"></i></button>
+            <button class="var-add-button btn btn-primary"><i class="icon-ok"></i></button>
+        </li>
+    </script>
+    <script type="text/javascript">
+        var $logic_params = {
+            4: ['Valor'],
+            5: [
+                {cap: 'Lista de valores (separados por vírgula)', type: 'list'}
+            ],
+            6: ['Valor'],
+            7: [
+                {cap: 'Lista de valores (separados por vírgula)', type: 'list'}
+            ],
+            8: [
+                {cap: 'Número', type: 'number'}
+            ],
+            9: [
+                {cap: 'Número', type: 'number'}
+            ],
+            10: [
+                {cap: 'Entre', type: 'number'},
+                {cap: 'E', type: 'number'}
+            ],
+            11: ['Palavra'],
+            12: ['Palavra']
+        };
+
+        var $save_condition_url = "{% url save_condition %}";
+        var $cond_type = "{{ related.0 }}";
+        var $related_id = {{ related.1.pk }};
+
+        {% if condition.id %}
+            var $id = {{ condition.id }};
+            var $extra_vars = {{ extra_vars|safe }};
+            var $current_logic = {{ condition.logic }};
+
+            {% if condition.action or condition.action == 0 %}
+                var $status = {{ condition.action }};
+            {% endif %}
+
+            {% if condition.answer %}
+                var $answer = "{{ condition.answer }}";
+            {% endif %}
+
+            {% if condition.param %}
+                var $param = {{ condition.param|safe }};
+            {% endif %}
+
+            {% if condition.new_value %}
+                var $new_value = "{{ condition.new_value }}";
+            {% endif %}
+        {% endif %}
+    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/util.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/enable.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/form/error.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/condition/logic.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/condition/extra_vars.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/condition.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/stage.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/confirm.js"></script>
+{% endblock %}

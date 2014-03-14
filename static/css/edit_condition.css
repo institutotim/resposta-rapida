@@ -1,0 +1,55 @@
+.cell {
+    display: inline-block;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.p30 {
+    padding-right: 30px;
+}
+
+input[type=checkbox] {
+    margin: -3px 0 0 0 !important;
+}
+
+.input-xxlarge { width: 400px !important; }
+
+.input-xxxlarge {
+    width: 750px;
+}
+
+.lazy-error {
+    border-color: #b94a48 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+}
+
+.lazy-error:focus {
+    border-color: #953b39 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392 !important;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392 !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392 !important;
+}
+
+#extra-vars, #extra-vars li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.add-template button, #extra-vars li button {
+    margin-top: -10px;
+}
+
+#extra-vars li .classy {
+    -webkit-transition: opacity 0.5s ease-in-out;
+}
+
+#extra-vars li .classy {
+    opacity: 0;
+}
+
+#extra-vars li:hover .classy {
+    opacity: 1;
+}

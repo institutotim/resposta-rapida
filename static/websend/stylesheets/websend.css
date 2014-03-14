@@ -1,0 +1,24 @@
+#inner .col-1 { width: 27%; }
+#inner .col-2 { width: 72%; }
+#log { margin-bottom: 0; }
+p.no-data {
+    line-height: 30px;
+    text-align: center;
+    font-size: 95%;
+    margin-top: 10px;
+    color: #888;
+}
+
+.odd { background-color: transparent; }
+
+#sent_messages td { font-size: 90% !important; cursor: pointer;}
+#sent_messages td:first-child { text-align: center; }
+
+.help-block { font-size: 90%; color: #555; }
+
+.messages {margin-top: 15px;}
+
+.pagination { text-align: center}
+th, td {
+    text-align: left !important;
+}

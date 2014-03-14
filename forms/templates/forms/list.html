@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Formulários{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/list.css">
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/forms.css">
+{% endblock %}
+
+{% block content %}
+    <div class="widget-box module list" id="form-list">
+        <div class="widget-title">
+            <h5>Lista de formulários</h5>
+
+            <div class="right">
+                <a href="{% url new_form %}" class="btn btn-small btn-success"><i class="icon-plus"></i></a>
+            </div>
+        </div>
+        <div class="widget-content">
+            {% if forms %}
+                <table class="table list-table table-hover">
+                    <thead>
+                    <tr>
+                        <th width="30%">Nome</th>
+                        <th width="20%">Palavra-chave</th>
+                        <th>Principal</th>
+                        <th width="30%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for form in forms %}
+                        <tr>
+                            <td><span>{{ form.name }}</span></td>
+                            <td><span>{{ form.keyword }}</span></td>
+                            <td>{% if form.main %}<span><i class="icon-star" style="color:#ffd500"></i></span>
+                                {% else %}<span>-</span>{% endif %}</td>
+                            <td class="button-col">
+                                <a href="{% url view_form form.id %}" class="btn btn-small"><i class="icon-edit"></i> Editar</a>
+                                <a href="{% url del_form form.id %}" class="btn del-btn btn-small"
+                                   data-confirm="Tem certeza que deseja excluir o formulário {{ form.name }}?"><i
+                                        class="icon-remove"></i> Excluir</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="center-table">Ops, nenhum formulário encontrado. Gostaria de <a href="{% url new_form %}">cadastrar um?</a></p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/confirm.js"></script>
+{% endblock %}
